@@ -23,7 +23,7 @@ from datetime import date
 #			FileB
 # To download everything from folder F211 to a local folder TST
 # python dl_gdrive_folder.py F211 TST	
-# It doesn´t work if you have more than one folder with the same name
+# It doesn't work if you have more than one folder with the same name
 #########################################################################
 # Build from the works of :
 # Mark Culhane - google_drive_backup.py
@@ -34,8 +34,8 @@ from datetime import date
 # https://github.com/HatsuneMiku/googleDriveAccess
 #
 # Know Issues: 
-#		- don´t work with Google "Forms" - fixed (simply skip those files)
-#		- downloads trashed files - fixed (don´t even consider them)
+#		- don't work with Google "Forms" - fixed (simply skip those files)
+#		- downloads trashed files - fixed (don't even consider them)
 #########################################################################
 
 #########################################################################
@@ -62,8 +62,8 @@ try:
 	parser = argparse.ArgumentParser(parents=[tools.argparser], description="Google Drive folder and files download")
 	parser.add_argument("dir_from", type=str, help="Google Drive folder tree starting folder to be downloaded")
 	parser.add_argument("dir_to", type=str, help="Initial local folder to receive tree and files")
-	parser.add_argument("-l", "--lista", help="Just list folder and files to be downloaded. Don´t actually donwnload anything", action="store_true")
-	parser.add_argument("-v", "--verbose", help="Writes what it´s doing.", action="store_true")
+	parser.add_argument("-l", "--lista", help="Just list folder and files to be downloaded. Don't actually donwnload anything", action="store_true")
+	parser.add_argument("-v", "--verbose", help="Writes what it's doing.", action="store_true")
 	args = parser.parse_args()
 	from_dir = args.dir_from
 	to_dir = args.dir_to
@@ -138,6 +138,11 @@ def downloadFile(service, spaces, file_name, file_id, mimeType, dest_folder):
 				if args.verbose:
 					print("Writing file {} to folder {}.\n".format(file_name, dest_folder))
 				wer.write(response)
+		                request = service.files().get(fileId=file_id).execute()
+	                        if args.verbose:
+		                        print("Modified time of file {} is: {}".format(file_name, request.get('modifiedTime')))
+
+#                                os.utime(os.path.join(dest_folder, filen_name), (access_time, modification_time))
 				global num_files
 				num_files +=1
 
@@ -207,6 +212,10 @@ def main(basedir):
 	num_files = 0
 	global num_skiped
 	num_skiped = 0
+	if args.verbose:
+		print("OS name is: {}".format(os.name))
+		print("OS uname is: {}".format(os.uname))
+		print("SYS platform  is: {}".format(sys.platform))
 
 	print("Downloading folder and files from: {} -> to: {}".format(from_dir, to_dir))
 	print("Connecting with Google Drive")
@@ -219,7 +228,7 @@ def main(basedir):
 		print("Error connecting to Google Drive")
 	else:
 	
-		print("Connected. Now let´s read the files")
+		print("Connected. Now let's read the files")
 		if args.lista:
 			print("just listing folder and files from source")
 			prepDest(to_dir, "")

@@ -1,3 +1,6 @@
+UPDATE: 1/11/2017 
+Google-Drive-Download base being used for Google-Camera-Upload-Manager. This project will manage camera uploads to Google Drive by downloading them locally and purging old media based on age or free space. 
+
 Google-Drive-Download
 Made for Python 3.5 and Google Drive API v3.
 Python scripts to download folders and files from google drive.
