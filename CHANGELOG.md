@@ -6,7 +6,7 @@
 # v0.3 - 01/11/2017 
 
 * Added change Log
-
+* Renamed projct and executable to Google-Camera-Upload-Manager
 
 #TO DO:
 
